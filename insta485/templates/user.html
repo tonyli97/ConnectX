@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+	<title>ConnectX</title>
+	<link rel="icon" href="#">
+</head>
+
+<body>
+
+	<!-- Navbar -->
+	<nav class="navbar navbar-light">
+		<a class="navbar-brand" href="/">
+			<ion-icon name="logo-instagram" size="large" class="d-inline-block align-bottom"></ion-icon>
+			<strong>ConnectX</strong>
+		</a>
+		<strong><a href="{{ url_for('explore') }}">explore</a> | <a href="{{ url_for('show_user', username=logname) }}">{{ logname }}</a></strong>
+	</nav>
+	<hr>
+	<br>
+
+
+	<h1>{{ username }}</h1>
+	{% if logname == username %}
+		<p>
+			<strong>
+				<a href="{{ url_for('edit') }}">Edit profile</a> | <a href="{{ url_for('log_out') }}">logout</a>
+			</strong>
+		</p>
+	{% endif %}
+	<p>
+		{% if logname_follows_username %}
+			following
+			<div>
+				<!-- DO NOT CHANGE THIS (aside from where we say 'FIXME') -->
+				<form action="" method="post" enctype="multipart/form-data">
+					<input type="submit" name="unfollow" value="unfollow"/>
+					<input type="hidden" name="username" value="{{ username }}"/>
+				</form>
+			</div>
+		{% elif logname == username %}
+		{% else %}
+			not following
+			<div>
+				<!-- DO NOT CHANGE THIS (aside from where we say 'FIXME') -->
+				<form action="" method="post" enctype="multipart/form-data">
+					<input type="submit" name="follow" value="follow"/>
+					<input type="hidden" name="username" value="{{ username }}"/>
+				</form>
+			</div>
+		{% endif %}
+	</p>
+	<p>
+		{{ total_posts }} 
+		{% if total_posts == 1 %}
+			post
+		{% else %}
+			posts
+		{% endif %}
+		<strong>
+			<a href="{{ url_for('followers', username=username) }}">{{ followers }} 
+				{% if followers == 1 %}
+					follower
+				{% else %}
+					followers
+				{% endif %}
+			</a>
+			<a href="{{ url_for('following', username=username) }}">{{ following }} following </a> 
+		</strong>
+	</p>
+
+	<p>{{ fullname }}</p>
+	
+	{% if logname == username %}
+		<div class="card">
+			<div class="card-body">
+				<!-- DO NOT CHANGE THIS -->
+				<form action="" method="post" enctype="multipart/form-data">
+					<input type="file" name="file">
+					<input type="submit" name="create_post" value="upload new post"/>
+				</form>
+			</div>
+		</div>
+	{% endif %}
+
+	{% for post in posts %}
+	<div class="d-flex flex-row">
+			<div class="col-md-4 px-0">
+				<a href="/p/{{ post['postid'] }}/"><img src="{{ post['img_url'] }}" class="img-fluid" alt=""></a>
+			</div>
+	</div>
+	{% endfor %}
+
+
+	<script src="https://unpkg.com/ionicons@4.5.0/dist/ionicons.js"></script>
+
+</body>
+
+</html>

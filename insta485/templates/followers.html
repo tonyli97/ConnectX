@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+	<title>ConnectX</title>
+	<link rel="icon" href="#">
+</head>
+
+<body>
+	<!-- Navbar -->
+	<nav class="navbar navbar-light">
+		<a class="navbar-brand" href="/">
+			<ion-icon name="logo-instagram" size="large" class="d-inline-block align-bottom"></ion-icon>
+			<strong>ConnectX</strong>
+		</a>
+		<strong><a href="{{ url_for('explore') }}">explore</a> | <a href="{{ url_for('show_user', username=logname) }}">{{ logname }}</a></strong>
+	</nav>
+	<hr>
+	<br>
+
+	<h1 class="text-center">Followers</h1>
+
+
+	{% for follower in followers %}		
+		<nav class="border border-dark rounded navbar navbar-light w-50 mx-auto">
+			<div>
+				
+				<img src="{{ follower['user_img_url'] }}" width="40"  class="d-inline-block align-center" alt="">
+				<a href="{{ url_for('show_user', username=follower['username']) }}">
+					<strong>{{ follower['username'] }}</strong>
+				</a>					
+			</div>
+				<span class="navbar-text"><strong>
+					{% if follower['logname_follows_username'] %}
+						following
+						<div>
+							<!-- DO NOT CHANGE THIS (aside from where we say 'FIXME') -->
+							<form action="" method="post" enctype="multipart/form-data">
+								<input type="submit" name="unfollow" value="unfollow"/>
+								<input type="hidden" name="username" value="{{ follower['username'] }}"/>
+							</form>
+						</div>
+					{% elif logname == follower['username'] %}
+					{% else %}
+						not following
+						<div>
+							<!-- DO NOT CHANGE THIS (aside from where we say 'FIXME') -->
+							<form action="" method="post" enctype="multipart/form-data">
+								<input type="submit" name="follow" value="follow"/>
+								<input type="hidden" name="username" value="{{ follower['username'] }}"/>
+							</form>
+						</div>
+						
+						
+					{% endif %}
+				</strong></span>		
+		</nav>
+		<br>
+	{% endfor %}
+
+	<script src="https://unpkg.com/ionicons@4.5.0/dist/ionicons.js"></script>
+
+
+</body>

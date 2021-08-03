@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+	<title>ConnectX</title>
+	<link rel="icon" href="#">
+</head>
+
+<body>
+	<!-- Navbar -->
+	<nav class="navbar navbar-light">
+		<a class="navbar-brand" href="/">
+			<ion-icon name="logo-instagram" size="large" class="d-inline-block align-bottom"></ion-icon>
+			<strong>ConnectX</strong>
+		</a>
+		<strong><a href="{{ url_for('explore') }}">explore</a> | <a href="{{ url_for('show_user', username=logname) }}">{{ logname }}</a></strong>
+	</nav>
+	<hr>
+	<br>
+
+	<p>{{ logname }}</p>
+
+    <!-- DO NOT CHANGE THIS -->
+    <form action="" method="post" enctype="multipart/form-data">
+    	<input type="submit" name="delete" value="confirm delete account" class="btn btn-danger"/>
+    </form>
+
+    <script src="https://unpkg.com/ionicons@4.5.0/dist/ionicons.js"></script>
+</body>

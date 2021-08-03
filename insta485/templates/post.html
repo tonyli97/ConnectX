@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+	<title>ConnectX</title>
+	<link rel="icon" href="#">
+</head>
+
+<body>
+	<!-- Navbar -->
+	<nav class="navbar navbar-light">
+		<a class="navbar-brand" href="/">
+			<ion-icon name="logo-instagram" size="large" class="d-inline-block align-bottom"></ion-icon>
+			<strong>ConnectX</strong>
+		</a>
+		<strong><a href="{{ url_for('explore') }}">explore</a> | <a href="{{ url_for('show_user', username=logname) }}">{{ logname }}</a></strong>
+	</nav>
+	<hr>
+	<br>
+
+
+
+	<div class="d-flex flex-row bd-highlight mb-3 border border-dark rounded">
+		
+    	<div class="p-2 bd-highlight">
+    		<img src="{{ img_url }}" width="700" alt="">
+    	</div>
+
+  		<div class="p-2 bd-highlight">
+  			<nav class="navbar">
+				<div>
+					<a href="{{ url_for('show_user', username=owner)}}">
+						<img src="{{ owner_img_url }}" width="40"  class="d-inline-block align-center" alt="">
+						<strong>{{ owner }}</strong>
+					</a>
+				</div>
+				<span class="navbar-text"><strong><a href="{{ url_for('postid_slug',postid_in=postid) }}">{{ timestamp }}</a></strong></span>
+			</nav>
+
+			<p>
+		    	{{ likes }}
+		    	{% if likes == 1 %}
+					like
+				{% else %}
+					likes
+				{% endif %}
+		    </p>
+
+			<ul style="list-style-type:none">
+		    	{% for comment in comments %}
+		    	<li>
+		    		<a href="{{ url_for('show_user', username=comment['owner']) }}"><strong>{{ comment['owner'] }}</strong></a> {{ comment['text'] }}
+		    		{% if comment['owner'] == logname %}
+		    		<!-- DO NOT CHANGE THIS (aside from where we say 'FIXME') -->
+					<form action="" method="post" enctype="multipart/form-data">
+						<input type="hidden" name="commentid" value="{{ comment['commentid'] }}"/>
+						<input type="submit" name="uncomment" value="delete"/>
+					</form>
+					{% endif %}
+		    	</li>
+		    	{% endfor %}
+		    </ul>
+		    <br>
+		    <p>
+				{% if does_like %}
+				<!-- DO NOT CHANGE THIS (aside from where we say 'FIXME') -->
+				<form action="" method="post" enctype="multipart/form-data">
+					<input type="hidden" name="postid" value="{{ postid }}"/>
+					<input type="submit" name="unlike" value="unlike"/>
+				</form>
+				{% else %}
+				<!-- DO NOT CHANGE THIS (aside from where we say 'FIXME') -->
+				<form action="" method="post" enctype="multipart/form-data">
+					<input type="hidden" name="postid" value="{{ postid }}"/>
+					<input type="submit" name="like" value="like"/>
+				</form>
+				{% endif %}	
+			</p>
+			<br>
+			<div>
+				<!-- DO NOT CHANGE THIS (aside from where we say 'FIXME') -->
+				<form action="" method="post" enctype="multipart/form-data">
+					<input type="hidden" name="postid" value="{{ postid }}"/>
+					<input type="text" name="text"/>
+					<input type="submit" name="comment" value="comment"/>
+				</form>
+			</div>
+			<br>
+			{% if owner == logname %}
+			<!-- DO NOT CHANGE THIS (aside from where we say 'FIXME') -->
+			<form action="" method="post" enctype="multipart/form-data">
+				<input type="hidden" name="postid" value="{{ postid }}"/>
+				<input type="submit" name="delete" value="delete this post"/>
+			</form>
+			{% endif %}
+  		</div>
+	</div>
+
+
+	<script src="https://unpkg.com/ionicons@4.5.0/dist/ionicons.js"></script>
+
+</body>
+
+</html>

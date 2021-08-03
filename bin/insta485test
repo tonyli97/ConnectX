@@ -1,0 +1,22 @@
+#!/bin/bash
+# insta485db
+
+
+# Stop on errors and prints commands
+set -e
+set -x
+
+# Run all unit tests using pytest -v tests
+pytest -v tests
+
+# Run pycodestyle insta485
+pycodestyle insta485
+
+# Run pydocstyle insta485
+pydocstyle insta485
+
+# Run pylint --reports=n --disable=cyclic-import --disable=no-member insta485
+pylint --reports=n --disable=cyclic-import --disable=no-member insta485
+
+# Run the provided bin/insta485test-html script to validate your app’s html, as described above
+bin/insta485test-html
